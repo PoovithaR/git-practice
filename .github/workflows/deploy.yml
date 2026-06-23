@@ -13,21 +13,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Copy files to EC2
-        uses: appleboy/scp-action@master
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USER }}
-          key: ${{ secrets.EC2_SSH_KEY }}
-          source: "index.html"
-          target: "/usr/share/nginx/html/"
-
-      - name: Start Nginx
+      - name: Deploy to EC2
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
+            sudo dnf install nginx -y
             sudo systemctl start nginx
             sudo systemctl enable nginx
+            sudo rm -f /usr/share/nginx/html/index.html
+            echo "<h1>Version 2 - Auto Deployed!</h1>" | sudo tee /usr/share/nginx/html/index.html
