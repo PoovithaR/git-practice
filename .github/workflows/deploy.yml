@@ -23,5 +23,6 @@ jobs:
             sudo dnf install nginx -y
             sudo systemctl start nginx
             sudo systemctl enable nginx
-            sudo rm -f /usr/share/nginx/html/index.html
-            echo "<h1>Version 2 - Auto Deployed!</h1>" | sudo tee /usr/share/nginx/html/index.html
+            sudo rm -rf /tmp/git-practice
+            cd /tmp && git clone https://github.com/PoovithaR/git-practice.git
+            sudo cp /tmp/git-practice/index.html /usr/share/nginx/html/
