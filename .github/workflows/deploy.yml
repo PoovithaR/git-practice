@@ -20,9 +20,9 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            sudo dnf install nginx -y
+            sudo dnf install nginx git -y
             sudo systemctl start nginx
             sudo systemctl enable nginx
             sudo rm -rf /tmp/git-practice
-            cd /tmp && git clone https://github.com/PoovithaR/git-practice.git
+            git clone https://github.com/PoovithaR/git-practice.git /tmp/git-practice
             sudo cp /tmp/git-practice/index.html /usr/share/nginx/html/
